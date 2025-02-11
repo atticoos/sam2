@@ -28,7 +28,7 @@ class ImageEncoder(nn.Module):
 
     def forward(self, sample: torch.Tensor):
         # Forward through backbone
-        features, pos = self.neck(self.trunk(sample))
+        features, pos = self.neck(self.trunk(sample.to(dtype=torch.bfloat16)))
         if self.scalp > 0:
             # Discard the lowest resolution features
             features, pos = features[: -self.scalp], pos[: -self.scalp]
